@@ -1,0 +1,28 @@
+config:
+  core.trust_password: admin
+  core.https_address: 192.168.100.7:8443
+  images.auto_update_interval: 15
+storage_pools:
+- name: local
+  driver: dir
+networks:
+- name: lxdbr0
+  type: bridge
+  config:
+    ipv4.address: 192.168.100.7/24
+    ipv6.address: none
+profiles:
+- name: default
+  devices:
+    root:
+      path: /
+      pool: default
+      type: disk
+    eth0:
+      name: eth0
+      nictype: bridged
+      parent: lxdbr0
+      type: nic
+cluster:
+  server_name: balanceadora
+  enabled: true
